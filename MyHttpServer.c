@@ -1,6 +1,7 @@
 #include "MyHttpServer.h"
+#include <winnls.h>
 
-#pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "ws2_32")
 
 // HTTP请求结构定义
 typedef struct {

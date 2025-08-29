@@ -3,7 +3,7 @@
 #include <winuser.h>
 #include <winver.h>
 
-32512 ICON "icon.ico"
+32512 ICON "WebView2.ico"
 
 CREATEPROCESS_MANIFEST_RESOURCE_ID MANIFEST "manifest.xml"
 

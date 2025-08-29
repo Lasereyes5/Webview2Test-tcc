@@ -4,8 +4,9 @@
 #include "WebView2.h"
 #include "MyHttpServer.h"
 
-#pragma comment(lib, "ws2_32.lib")
-#pragma comment(lib, "comctl32.lib")
+#pragma comment(lib, "ws2_32")
+#pragma comment(lib, "comctl32")
+#pragma comment(lib, "user32")
 
 // 窗口的大小
 // PS：如果要让应用的逻辑像素大小受系统缩放影响，可以在 manifest.xml 中关闭dpi感知
@@ -158,7 +159,8 @@ int MyMessageBoxW(HWND hWnd, UINT uType, LPCWSTR lpCaption, LPCWSTR formatText, 
     wchar_t text[1024];
     va_list ap;
     va_start(ap, formatText);
-    vswprintf(text, sizeof(text)/sizeof(wchar_t), formatText, ap);
+    //~ vswprintf(text, sizeof(text)/sizeof(wchar_t), formatText, ap);
+    _vsnwprintf(text, sizeof(text)/sizeof(wchar_t), formatText, ap);
     va_end(ap);
     
     return MessageBoxW(hWnd, text, lpCaption, uType);
