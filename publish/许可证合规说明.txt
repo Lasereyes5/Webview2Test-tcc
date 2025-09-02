@@ -1,0 +1,12 @@
+Diy-Kards.exe是Diy-Kards-wv2pack项目在GPL v3许可证下发行的程序
+	是为diyKards网页资源生成套壳程序而由WebView2Test-tcc项目修改而生成
+	是Diy-Kards-wv2pack项目生成的diyKards网页资源套壳程序1.0.0.0版本
+	原项目为WebView2Test
+
+注：Diy-Kards-wv2pack项目与diyKards项目本身没有联系，仅作为Windows端的WebView2套壳程序方便使用diyKards网页，为个人项目
+diyKards: https://www.bilibili.com/read/cv42630769
+
+WebView2Test: https://github.com/SyrieYume/Webview2Test
+WebView2Test-tcc: https://github.com/Lasereyes5/Webview2Test-tcc
+Diy-Kards-wv2pack: https://github.com/Lasereyes5/Webview2Test-tcc/tree/Diy-Kards-wv2pack
+Diy-Kards-wv2pack 1.0.0.0: 

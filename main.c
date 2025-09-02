@@ -10,14 +10,14 @@
 
 // 窗口的大小
 // PS：如果要让应用的逻辑像素大小受系统缩放影响，可以在 manifest.xml 中关闭dpi感知
-#define WINDOW_SIZE 1280,720
+#define WINDOW_SIZE 560,720
 
 // 窗口类名和窗口标题，可以按自己喜欢乱改
 #define WINDOW_CLASSNAME L"com.herta.webview2Test"
-#define WINDOW_TITLE L"Herta - Webview2"
+#define WINDOW_TITLE L"Diy-Kards"
 
 // HTTP服务的静态文件根目录
-#define SERVER_BASEPATH "./assets"
+#define SERVER_BASEPATH "./dist"
 
 // HTTP服务的端口，如果端口被占用，实际使用的端口可能不同
 #define SERVER_PORT 3050
