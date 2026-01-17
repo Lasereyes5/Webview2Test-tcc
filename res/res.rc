@@ -21,13 +21,13 @@ BEGIN
     BEGIN
         BLOCK "080404b0"        // 语言和字符集 (简体中文 / Unicode)
         BEGIN
-            VALUE "CompanyName", "黑塔空间站" // 公司名称
-            VALUE "FileDescription", "求你了，来测吧" // 程序描述
+            VALUE "CompanyName", "Laser_eyes" // 公司名称
+            VALUE "FileDescription", "WebView2 套壳程序" // 程序描述
             VALUE "FileVersion", "1.0.0.0" // 文件版本号
-            VALUE "InternalName", "Herta" // 程序名称
-            VALUE "LegalCopyright", "Copyright © 2025 黑塔空间站 Inc." // 版权所有
-            VALUE "OriginalFilename", "Herta.exe" // 原始文件名 
-            VALUE "ProductName", "Herta" // 产品名称
+            VALUE "InternalName", "WebUI" // 程序名称
+            VALUE "LegalCopyright", "Copyright © 2025 黑塔空间站 Inc.; 2026 Laser_eyes" // 版权所有
+            VALUE "OriginalFilename", "WebUI.exe" // 原始文件名 
+            VALUE "ProductName", "WebUI" // 产品名称
             VALUE "ProductVersion", "1.0.0.0" // 产品版本号
         END
     END

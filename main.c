@@ -2,22 +2,23 @@
 #include <stdio.h>
 #include <commctrl.h>
 #include "WebView2.h"
-#include "MyHttpServer.h"
+//~ #include "MyHttpServer.h"
 
-#pragma comment(lib, "ws2_32")
+//~ #pragma comment(lib, "ws2_32")
 #pragma comment(lib, "comctl32")
 #pragma comment(lib, "user32")
 
 // 窗口的大小
 // PS：如果要让应用的逻辑像素大小受系统缩放影响，可以在 manifest.xml 中关闭dpi感知
-#define WINDOW_SIZE 1280,720
+#define WINDOW_SIZE 800,500
 
 // 窗口类名和窗口标题，可以按自己喜欢乱改
 #define WINDOW_CLASSNAME L"com.herta.webview2Test"
-#define WINDOW_TITLE L"Herta - Webview2"
+#define WINDOW_TITLE L"WebView2"
+#define DEFAULT_URL L"https://www.bing.com"
 
 // HTTP服务的静态文件根目录
-#define SERVER_BASEPATH "./assets"
+//~ #define SERVER_BASEPATH "./dist"
 
 // HTTP服务的端口，如果端口被占用，实际使用的端口可能不同
 #define SERVER_PORT 3050
@@ -25,12 +26,12 @@
 // webview2 在运行的时候，会生成用户数据文件夹，可以指定其位置
 #define WEBVIEW_DATA_FOLDER_PATH L"./Webview2.Data"
 
-
+wchar_t *url=DEFAULT_URL;
 // 窗口句柄，通过Win32 API可以修改窗口的样式和属性
 HWND window = NULL;
 
 // HTTP服务的句柄
-MyHttpServer server = NULL;
+//~ MyHttpServer server = NULL;
 
 // webview 和 webviewController 可以操控Webview2控件
 ICoreWebView2* webview = NULL;
@@ -96,8 +97,8 @@ HRESULT ControllerHandlerInvoke(ICoreWebView2CreateCoreWebView2ControllerComplet
     webviewController->lpVtbl->put_Bounds(webviewController, bounds);
     
     // 打开HTTP服务对应的本地端口
-    wchar_t url[MAX_PATH];
-    wsprintfW(url, L"http://localhost:%d", server->port);
+    //~ wchar_t url[MAX_PATH];
+    //~ wsprintfW(url, L"http://localhost:%d", server->port);
     webview->lpVtbl->Navigate(webview, url);
 
     return S_OK;
@@ -142,8 +143,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam) {
         break;
 
     case WM_CLOSE:
-        // 程序关闭时清理资源
-        CloseMyHttpServer(server);
+        // 程序关闭
         PostQuitMessage(0);
         exit(0);
         break;
@@ -168,7 +168,25 @@ int MyMessageBoxW(HWND hWnd, UINT uType, LPCWSTR lpCaption, LPCWSTR formatText, 
 
 
 
-int main() {
+int wmain(int argc, wchar_t *argv[]){
+    const wchar_t 
+        //~ *link=L"https://www.bing.com",
+        *title=WINDOW_TITLE,
+        *iconPath=NULL;
+    //~ int width=800, height=500;
+    struct {int width,height;}size={WINDOW_SIZE};
+    switch (argc){
+        default:
+        case 6:iconPath 	= argv[5];
+        case 5:size.height 	= _wtoi(argv[4]);
+        case 4:size.width 	= _wtoi(argv[3]);
+        case 3:title 		= argv[2];
+        case 2:url  		= argv[1];//puts(link);
+        case 1:;//break;
+    }
+    // 允许使用本地脚本
+    putenv("WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS=--allow-file-access-from-files");
+    
     // 获得当前程序实例
     HINSTANCE hInstance = GetModuleHandleW(NULL);
 
@@ -181,7 +199,12 @@ int main() {
     wc.style = CS_HREDRAW | CS_VREDRAW;
     wc.lpfnWndProc = WindowProc;
     wc.hInstance = hInstance;
-    wc.hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(32512));
+    //~ wc.hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(32512));
+    wc.hIcon = iconPath?
+        (HICON)LoadImageW(NULL, iconPath, IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE | LR_SHARED)
+    :
+        LoadIconW(hInstance, MAKEINTRESOURCEW(32512))
+    ;
     wc.hCursor = LoadCursorW(NULL, MAKEINTRESOURCEW(32512));
     wc.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     wc.lpszClassName = WINDOW_CLASSNAME;
@@ -192,7 +215,8 @@ int main() {
     }
 
     // 创建窗口
-    window = CreateWindowExW(0, WINDOW_CLASSNAME, WINDOW_TITLE, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, WINDOW_SIZE, NULL, NULL, hInstance, NULL);
+    //~ window = CreateWindowExW(0, WINDOW_CLASSNAME, WINDOW_TITLE, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, WINDOW_SIZE, NULL, NULL, hInstance, NULL);
+    window = CreateWindowExW(0, WINDOW_CLASSNAME, title, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, size.width,size.height, NULL, NULL, hInstance, NULL);
 
     if(!window) {
         MyMessageBoxW(NULL, MB_OK | MB_ICONERROR | MB_TOPMOST, L"ERROR", L"创建窗口时出错，错误代码：0x%08X", GetLastError());
@@ -203,8 +227,8 @@ int main() {
     UpdateWindow(window);
 
     // 在新的线程创建HTTP服务
-    server = CreateMyHttpServer(SERVER_BASEPATH, SERVER_PORT);
-    CreateThread(NULL, 0, (void*)StartMyHttpServer, server, 0, NULL);
+    //~ server = CreateMyHttpServer(SERVER_BASEPATH, SERVER_PORT);
+    //~ CreateThread(NULL, 0, (void*)StartMyHttpServer, server, 0, NULL);
 
     // 创建Webview2环境，当 Webview2环境创建完成后，EnvHandlerInvoke会被调用
     envHandler = malloc(sizeof(ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler));

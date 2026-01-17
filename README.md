@@ -1,7 +1,14 @@
-# Webview2Test-tcc
+# WebUI
 
-Use C language and tcc compiler to pack front-end project to executable program(64 bit)
+Use C language and tcc compiler to provide a general webview executable program(64 bit)
 
+## Usage
+
+It opens `https://www.bing.com` by default.
+
+Commandline args: (all arguments are optional)
+
+`WebUI [link] [title] [width] [height] [icon path]`
 
 ## How to compile
 
@@ -13,7 +20,7 @@ Run `build.bat` or following command:
 windres res/res.rc -O coff res/res.res
 tcc -impdef publish/Webview2Loader.dll -o Webview2Loader.def
 
-tcc main.c MyHttpServer.c res/res.res -o publish/Herta.exe -Iwinapiwv2 -lws2_32 -lcomctl32 Webview2Loader.def -Wl,-subsystem=gui -Dinterface=struct -DDEFINE_ENUM_FLAG_OPERATORS(arg)= -D_COM_Outptr_=
+tcc main.c res/res.res -o publish/WebUI.exe -Iwinapiwv2 -lws2_32 -lcomctl32 Webview2Loader.def -Wl,-subsystem=gui -Dinterface=struct -DDEFINE_ENUM_FLAG_OPERATORS(arg)= -D_COM_Outptr_=
 ```
 
 
